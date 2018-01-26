@@ -1,7 +1,7 @@
-# Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
+﻿# Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ольга](https://up.htmlacademy.ru/javascript/12/user/491137).
-* Наставник: `Неизвестно`.
+* Наставник: `Денис Корнейчук 70618`.
 
 ---
 
