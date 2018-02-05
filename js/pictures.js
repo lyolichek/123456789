@@ -10,7 +10,14 @@ var PHRASES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
+// формирует случайное значение
+function randomInteger(min, max) {
+  return Math.floor(min + Math.random() * (max + 1 - min));
+}
+
 //  ----- Remove: start -----
+var templateArr = getDataArr();
+
 function getDataArr() { // формирует массив объектов
   var arrObj = [];
 
@@ -30,31 +37,26 @@ function generateDataObject(i) { // формирует объект
 }
 
 function generateComments() { // создаем массив из комментариев
-  var commentsArr = [];
-  for (var i = 0; i < randomInteger(1, 10); i++) {
-    var comment = PHRASES[randomInteger(0, PHRASES.length - 1)]; // одна ячейка массива PHRASES
-    if (randomInteger(1, 2) == 2) {
-      comment += ' ' + PHRASES[randomInteger(0, PHRASES.length - 1)];
-    }
-    commentsArr[i] = comment;
+  var comment = PHRASES[randomInteger(0, PHRASES.length - 1)]; // одна ячейка массива PHRASES
+  if (randomInteger(1, 2) === 2) {
+    comment += ' ' + PHRASES[randomInteger(0, PHRASES.length - 1)];
   }
-  return commentsArr;
-}
-//  ----- Remove: end -----
-// формирует случайное значение
-function randomInteger(min, max) {
-  var rand = Math.floor(min + Math.random() * (max + 1 - min));
-  return rand;
+  return comment;
 }
 
 // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
 
 var template = document.querySelector('#picture-template').content.querySelector('.picture');
-var templateArr = getDataArr();
 var fragment = document.createDocumentFragment();
 var pictures = document.querySelector('.pictures');
 
 for (var i = 0; i < GENERAL_COUNT; i++) {
+  getFragment(i);
+}
+
+pictures.appendChild(fragment);
+
+function getFragment(i) {
   var tempElement = template.cloneNode(true);
   var image = tempElement.querySelector('img');
   var pictureLikes = tempElement.querySelector('.picture-likes');
@@ -62,25 +64,24 @@ for (var i = 0; i < GENERAL_COUNT; i++) {
 
   image.setAttribute('src', templateArr[i].url);
   pictureLikes.textContent = templateArr[i].likes;
+  pictureComments.textContent = templateArr[i].comments;
 
-  for (var j = 0; j < templateArr[i].comments.length; j++) {  // количество комментариев в массиве
-    var newElement = document.createElement('span');
-    newElement.innerHTML = templateArr[i].comments[j] + '<br>';
-    pictureComments.appendChild(newElement);
-  }
-
-  if (i == 0) {
-    var galleryOverlay = document.querySelector('.gallery-overlay');
-    var galleryOverlayImage = galleryOverlay.querySelector('.gallery-overlay-image');
-    var likesCount = galleryOverlay.querySelector('.likes-count');
-    var commentsCount = galleryOverlay.querySelector('.comments-count');
-    galleryOverlay.classList.remove('hidden');
-    galleryOverlayImage.setAttribute('src', templateArr[i].url);
-    likesCount.textContent = templateArr[i].likes;
-    commentsCount.textContent = templateArr[i].comments.length;
+  if (i === 0) {
+    openGalleryPhoto();
   }
 
   fragment.appendChild(tempElement);
 }
 
-pictures.appendChild(fragment);
+function openGalleryPhoto() {
+  var galleryOverlay = document.querySelector('.gallery-overlay');
+  var galleryOverlayImage = galleryOverlay.querySelector('.gallery-overlay-image');
+  var likesCount = galleryOverlay.querySelector('.likes-count');
+  var commentsCount = galleryOverlay.querySelector('.comments-count');
+
+  galleryOverlay.classList.remove('hidden');
+  galleryOverlayImage.setAttribute('src', templateArr[i].url);
+  likesCount.textContent = templateArr[i].likes;
+  commentsCount.textContent = templateArr[i].comments.length;
+}
+
