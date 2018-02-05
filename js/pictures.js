@@ -56,17 +56,17 @@ for (var i = 0; i < GENERAL_COUNT; i++) {
 
 pictures.appendChild(fragment);
 
-function getFragment(i) {
+function getFragment(number) {
   var tempElement = template.cloneNode(true);
   var image = tempElement.querySelector('img');
   var pictureLikes = tempElement.querySelector('.picture-likes');
   var pictureComments = tempElement.querySelector('.picture-comments');
 
-  image.setAttribute('src', templateArr[i].url);
-  pictureLikes.textContent = templateArr[i].likes;
-  pictureComments.textContent = templateArr[i].comments;
+  image.setAttribute('src', templateArr[number].url);
+  pictureLikes.textContent = templateArr[number].likes;
+  pictureComments.textContent = templateArr[number].comments;
 
-  if (i === 0) {
+  if (number === 0) {
     openGalleryPhoto();
   }
 
