@@ -132,9 +132,9 @@ function fillImgPopup(evt) {
       openGalleryPhoto(clickedObj);
       openPopup(galleryOverlay);
       break;
-    } else if (evt.path[i] === this) {
+    } /*else if (evt.path[i] === this) {
       break;
-    }
+    }*/
   }
 }
 
@@ -168,9 +168,9 @@ uploadEffectControls.addEventListener('click', function (evt) {
       var filterName = evt.path[i].dataset.filterType; // присвоила его значение
       effectImagePreview.classList.add(filterName);
       applyFilter(filterName, 20, effectImagePreview);
-    } else if (evt.path[i] === this) {
+    } /*else if (evt.path[i] === this) {
       break;
-    }
+    }*/
   }
 });
 /* uploadEffectLevelPin.addEventListener('mouseup', function () {
