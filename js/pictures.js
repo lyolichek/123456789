@@ -14,7 +14,7 @@ var pictures = document.querySelector('.pictures');
 var galleryOverlay = document.querySelector('.gallery-overlay');
 var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
 
-/**
+/*
  * формирует случайное значение
  */
 function randomInteger(min, max) {
@@ -23,7 +23,7 @@ function randomInteger(min, max) {
 
 var templateArr = getDataArr();
 
-/**
+/*
  *  функция формирует массив объектов
  */
 function getDataArr() {
@@ -34,7 +34,7 @@ function getDataArr() {
   return arrObj;
 }
 
-/**
+/*
  *  формирует объект
  */
 function generateDataObject(i) {
@@ -45,7 +45,7 @@ function generateDataObject(i) {
   };
 }
 
-/**
+/*
  * создаем массив из комментариев
  */
 function generateComments() {
@@ -60,7 +60,7 @@ function generateComments() {
   return commentsArr;
 }
 
-/**
+/*
  * создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
  */
 function createElements(arrElements) {
@@ -69,7 +69,7 @@ function createElements(arrElements) {
   }
 }
 
-/**
+/*
  * Наполнение фрагмента информацией о фото
  */
 function getFragment(obj) {
@@ -90,7 +90,8 @@ function getFragment(obj) {
 
 createElements(templateArr);
 pictures.appendChild(fragment); // наполняем контейнер pictures элементами
-/**
+
+/*
  * Заполняет попап информацией из указанного объекта
  */
 function openGalleryPhoto(obj) {
@@ -116,8 +117,8 @@ galleryOverlayClose.addEventListener('click', function () {
 });
 pictures.addEventListener('click', fillImgPopup);
 
-/**
- * наполняет попап информацией о картинке
+/*
+ * Наполняет попап информацией о картинке
  */
 function fillImgPopup(evt) {
   evt.preventDefault();
@@ -149,12 +150,14 @@ uploadFile.addEventListener('change', function () {
 uploadFormCancel.addEventListener('click', function () {
   closePopup(uploadOverlay);
 });
+
 /**
  * Применение эффекта для изображения
  */
 var uploadEffectControls = document.querySelector('.upload-effect-controls');
-var uploadEffectLevelPin = document.querySelector('.upload-effect-level-pin'); // ползунок
+// var uploadEffectLevelPin = document.querySelector('.upload-effect-level-pin'); // ползунок
 var effectImagePreview = document.querySelector('.effect-image-preview'); // большая картинка
+
 /**
  * Применение фильтра для изображения
  */
@@ -242,22 +245,3 @@ buttonDec.addEventListener('click', function () {
 buttonInc.addEventListener('click', function () {
   changeValue(currentValue, true);
 });
-
-/*
- function changeSize(value, boolean) {
- value = parseInt(value);
- if (!boolean && value >= 0) {
- return value - STEP + '%';
- } else if (boolean && value <= 100) {
- return value + STEP + '%';
- }
- return value + '%';
- }
-
- buttonDec.addEventListener('click', function () {
- controlsValue.value = changeSize(valueSize, false);
- });
- buttonInc.addEventListener('click', function () {
- controlsValue.value = changeSize(valueSize, true);
- });
- */
