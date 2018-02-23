@@ -264,7 +264,7 @@ var inputHashtags = formHashtags.querySelector('.upload-form-hashtags');
 
 // Проверка есть ли аттрибут required у поля с хештегами
 function setRequiredHashtags() {
-  if (inputHashtags.getAttribute('required') == null) {
+  if (inputHashtags.getAttribute('required') === null) {
     inputHashtags.setAttribute('required', 'required');
   }
 }
@@ -284,7 +284,7 @@ function checkHashtag(arr) {
       return 'symbol';
     }
     for (var j = 0; j < arr.length; j++) {
-      if (arr[i] == arr[j]) {
+      if (arr[i] === arr[j]) {
         return 'same';
       }
     }
@@ -297,7 +297,6 @@ formHashtags.addEventListener('submit', function (evt) {
 
   evt.preventDefault();
   //evt.stopPropagation();
-  //console.log(hashtagsArr);
 
   if (errorCode) {
     inputHashtags.setCustomValidity(HASHTAG_ERRORS[errorCode]);
