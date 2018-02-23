@@ -250,57 +250,58 @@ buttonInc.addEventListener('click', function () {
 });
 
 /* hashtags*/
-var formHashtags = document.querySelector('.upload-form-hashtags');
 
-function validateHashtags(value) {
-  if (value.charAt(0) !== '#') {
-    formHashtags.setCustomValidity('Хэш-тег должен начинаться с символа "#"');
-    formHashtags.style.border = '2px solid #f00';
-    return true;
+var HASHTAG_ERRORS = {
+  'symbol': 'Отсутствует обязательный символ #',
+  'max': 'Максимальное кол-во хештегов должно быть 5',
+  'same': 'Есть повторяющиеся хештеги',
+  'maxLength': 'Слишком длинный хештег',
+  'minLength': 'Длина хештега не может быть меньше 3 символов'
+};
+
+var formHashtags = document.querySelector('.upload-form');
+var inputHashtags = formHashtags.querySelector('.upload-form-hashtags');
+
+// Проверка есть ли аттрибут required у поля с хештегами
+function setRequiredHashtags() {
+  if (inputHashtags.getAttribute('required') == null) {
+    inputHashtags.setAttribute('required', 'required');
   }
 }
 
-var checkSimilarValues = function (array) {
-  for (var j = 0; j < array.length; j++) {
-    if (array[j] === array[j + 1]) {
-      break;
+function checkHashtag(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr.length > 5) {
+      return 'max';
+    }
+    if (arr[i].length > 20) {
+      return 'maxLength';
+    }
+    if (arr[i].length < 3) {
+      return 'minLength';
+    }
+    if (arr[i].indexOf('#') < 0) {
+      return 'symbol';
+    }
+    for (var j = 0; j < arr.length; j++) {
+      if (arr[i] == arr[j]) {
+        return 'same';
+      }
     }
   }
-  return array[j];
-};
+}
 
-checkSimilarValues()
+formHashtags.addEventListener('submit', function (evt) {
+  var hashtagsArr = inputHashtags.value.split(' ');
+  var errorCode = checkHashtag(hashtagsArr);
 
-formHashtags.addEventListener('input', function (evt) {
-  var inputValue = evt.target.value;
-  var hashtags = inputValue.split(' ');
-  console.log(hashtags);
+  evt.preventDefault();
+  //evt.stopPropagation();
+  //console.log(hashtagsArr);
 
-
-  if (arrHashtags.length > 5) {
-    formHashtags.setCustomValidity('Вы можете ввести максимум пять хэш-тегов.');
-    formHashtags.style.border = '2px solid #f00';
+  if (errorCode) {
+    inputHashtags.setCustomValidity(HASHTAG_ERRORS[errorCode]);
   }
+});
 
-  console.log(hashtags);
-
-  //validateHashtags(str);
-})
-
-/*
- function getDataArr() {
- var arrObj = []; // создаем массив, в который записываем все наши объекты
- for (var i = 0; i < GENERAL_COUNT; i++) {
- arrObj.push(generateDataObject(i + 1));
- }
- return arrObj;
- }
-
-formHashtags.addEventListener('keyup', function () {
-  validateHashtags();
-})
-
-function validateHashtags() {
-
-}*/
-
+setRequiredHashtags();
