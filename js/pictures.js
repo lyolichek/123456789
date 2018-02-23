@@ -1,5 +1,7 @@
 'use strict';
+
 var GENERAL_COUNT = 25;
+var STEP = 25;
 var PHRASES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -13,6 +15,10 @@ var fragment = document.createDocumentFragment();
 var pictures = document.querySelector('.pictures');
 var galleryOverlay = document.querySelector('.gallery-overlay');
 var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
+var uploadFile = document.querySelector('#upload-file');
+var uploadOverlay = document.querySelector('.upload-overlay');
+var uploadFormCancel = document.querySelector('.upload-form-cancel');
+var templateArr = getDataArr();
 
 /*
  * формирует случайное значение
@@ -21,21 +27,8 @@ function randomInteger(min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
 }
 
-var templateArr = getDataArr();
-
 /*
  *  функция формирует массив объектов
- */
-function getDataArr() {
-  var arrObj = []; // создаем массив, в который записываем все наши объекты
-  for (var i = 0; i < GENERAL_COUNT; i++) {
-    arrObj.push(generateDataObject(i + 1));
-  }
-  return arrObj;
-}
-
-/*
- *  формирует объект
  */
 function generateDataObject(i) {
   return {
@@ -46,12 +39,23 @@ function generateDataObject(i) {
 }
 
 /*
+ *  формирует объект
+ */
+function getDataArr() {
+  var arrObj = []; // создаем массив, в который записываем все наши объекты
+  for (var i = 0; i < GENERAL_COUNT; i++) {
+    arrObj.push(generateDataObject(i + 1));
+  }
+  return arrObj;
+}
+
+/*
  * создаем массив из комментариев
  */
 function generateComments() {
   var commentsArr = []; // создаем массив комментариев
-  for (var i = 0; i < randomInteger(1, 10); i++) {
-    var comment = PHRASES[randomInteger(0, PHRASES.length - 1)]; // одна ячейка массива PHRASES
+  for (var i = 0; i < randomInteger(1, 10); i++) { // 5
+    var comment = PHRASES[randomInteger(0, PHRASES.length - 1)]; // одна ячейка массива PHRASES, 2
     if (randomInteger(1, 2) === 2) {
       comment += ' ' + PHRASES[randomInteger(0, PHRASES.length - 1)];
     }
@@ -79,12 +83,15 @@ function getFragment(obj) {
   var pictureComments = cloneElement.querySelector('.picture-comments');
   image.setAttribute('src', obj.url);
   pictureLikes.textContent = obj.likes;
-  // разделили комментарии на отдельные элементы span
-  for (var i = 0; i < obj.comments.length; i++) {
-    var span = document.createElement('span');
-    span.textContent = obj.comments[i];
-    pictureComments.appendChild(span);
-  }
+  pictureComments.textContent = obj.comments.length;
+  /*
+   // разделили комментарии на отдельные элементы span
+   for (var i = 0; i < obj.comments.length; i++) {
+   var span = document.createElement('span');
+   span.textContent = obj.comments[i];
+   pictureComments.appendChild(span);
+   }
+   */
   return cloneElement;
 }
 
@@ -100,7 +107,7 @@ function openGalleryPhoto(obj) {
   var commentsCount = galleryOverlay.querySelector('.comments-count');
   galleryOverlayImage.setAttribute('src', obj.url);
   likesCount.textContent = obj.likes;
-  commentsCount.textContent = obj.comments.length;
+  commentsCount.textContent = obj.comments;
 }
 
 /* event */
@@ -128,22 +135,19 @@ function fillImgPopup(evt) {
       var clickedElement = evt.path[i];
       clickedObj.url = clickedElement.querySelector('img').getAttribute('src');
       clickedObj.likes = clickedElement.querySelector('.picture-likes').textContent;
-      clickedObj.comments = clickedElement.querySelectorAll('.picture-comments span');
+      clickedObj.comments = clickedElement.querySelector('.picture-comments').textContent;
       openGalleryPhoto(clickedObj);
       openPopup(galleryOverlay);
       break;
-    } /*else if (evt.path[i] === this) {
+    } else if (evt.path[i] === event.currentTarget) {
       break;
-    }*/
+    }
   }
 }
 
 /**
  * Загрузка изображения и показ формы редактирования
  */
-var uploadFile = document.querySelector('#upload-file');
-var uploadOverlay = document.querySelector('.upload-overlay');
-var uploadFormCancel = document.querySelector('.upload-form-cancel');
 uploadFile.addEventListener('change', function () {
   openPopup(uploadOverlay);
 });
@@ -168,9 +172,9 @@ uploadEffectControls.addEventListener('click', function (evt) {
       var filterName = evt.path[i].dataset.filterType; // присвоила его значение
       effectImagePreview.classList.add(filterName);
       applyFilter(filterName, 20, effectImagePreview);
-    } /*else if (evt.path[i] === this) {
+    } else if (evt.path[i] === event.currentTarget) {
       break;
-    }*/
+    }
   }
 });
 /* uploadEffectLevelPin.addEventListener('mouseup', function () {
@@ -214,7 +218,6 @@ function applyFilter(name, value, element) {
 /**
  * Увеличение масштаба изображения
  */
-var STEP = 25;
 var uploadResizeControls = document.querySelector('.upload-resize-controls');
 var buttonDec = uploadResizeControls.querySelector('.upload-resize-controls-button-dec');
 var buttonInc = uploadResizeControls.querySelector('.upload-resize-controls-button-inc');
@@ -245,3 +248,59 @@ buttonDec.addEventListener('click', function () {
 buttonInc.addEventListener('click', function () {
   changeValue(currentValue, true);
 });
+
+/* hashtags*/
+var formHashtags = document.querySelector('.upload-form-hashtags');
+
+function validateHashtags(value) {
+  if (value.charAt(0) !== '#') {
+    formHashtags.setCustomValidity('Хэш-тег должен начинаться с символа "#"');
+    formHashtags.style.border = '2px solid #f00';
+    return true;
+  }
+}
+
+var checkSimilarValues = function (array) {
+  for (var j = 0; j < array.length; j++) {
+    if (array[j] === array[j + 1]) {
+      break;
+    }
+  }
+  return array[j];
+};
+
+checkSimilarValues()
+
+formHashtags.addEventListener('input', function (evt) {
+  var inputValue = evt.target.value;
+  var hashtags = inputValue.split(' ');
+  console.log(hashtags);
+
+
+  if (arrHashtags.length > 5) {
+    formHashtags.setCustomValidity('Вы можете ввести максимум пять хэш-тегов.');
+    formHashtags.style.border = '2px solid #f00';
+  }
+
+  console.log(hashtags);
+
+  //validateHashtags(str);
+})
+
+/*
+ function getDataArr() {
+ var arrObj = []; // создаем массив, в который записываем все наши объекты
+ for (var i = 0; i < GENERAL_COUNT; i++) {
+ arrObj.push(generateDataObject(i + 1));
+ }
+ return arrObj;
+ }
+
+formHashtags.addEventListener('keyup', function () {
+  validateHashtags();
+})
+
+function validateHashtags() {
+
+}*/
+
