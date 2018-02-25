@@ -10,6 +10,7 @@ var PHRASES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+var serverLink = 'https://js.dump.academy/kekstagram';
 var template = document.querySelector('#picture-template').content.querySelector('.picture');
 var fragment = document.createDocumentFragment();
 var pictures = document.querySelector('.pictures');
@@ -263,13 +264,6 @@ var HASHTAG_ERRORS = {
 var formHashtags = document.querySelector('.upload-form');
 var inputHashtags = formHashtags.querySelector('.upload-form-hashtags');
 
-// Проверка есть ли аттрибут required у поля с хештегами
-function setRequiredHashtags() {
-  if (inputHashtags.getAttribute('required') == null) {
-    inputHashtags.setAttribute('required', 'required');
-  }
-}
-
 function checkHashtag(arr) {
   if (arr.length > 5) {
     return 'max';
@@ -289,15 +283,18 @@ function checkHashtag(arr) {
       return 'symbol_wrong';
     }
     for (var j = 0; j < arr.length; j++) {
-      if ((toUpperCase(arr[i]) == toUpperCase(arr[j])) && (i !== j)) {
+      if ((arr[i].toLowerCase() === arr[j].toLowerCase()) && (i !== j)) {
         return 'same';
       }
     }
   }
+
+  return '';
 }
 
 function getValidHashtags(hashArr) {
   var validArr = [];
+
   for (var i = 0; i < hashArr.length; i++) {
     if (hashArr[i] !== '') {
       validArr.push(hashArr[i]);
@@ -307,17 +304,16 @@ function getValidHashtags(hashArr) {
   return validArr;
 }
 
-formHashtags.addEventListener('invalid', function (evt) {
-  console.log('invalid');
-});
-
-formHashtags.addEventListener('submit', function (evt) {
+inputHashtags.addEventListener('change', function (evt) {
   var hashtagsArr = getValidHashtags(inputHashtags.value.split(' '));
   var errorCode = checkHashtag(hashtagsArr);
 
-  if (errorCode) {
+  if (errorCode !== '') {
     inputHashtags.setCustomValidity(HASHTAG_ERRORS[errorCode]);
+  } else {
+    inputHashtags.setCustomValidity(errorCode);
   }
+
 });
 
-setRequiredHashtags();
+formHashtags.setAttribute('action', serverLink);
