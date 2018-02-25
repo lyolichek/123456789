@@ -304,7 +304,7 @@ function getValidHashtags(hashArr) {
   return validArr;
 }
 
-inputHashtags.addEventListener('change', function (evt) {
+inputHashtags.addEventListener('change', function () {
   var hashtagsArr = getValidHashtags(inputHashtags.value.split(' '));
   var errorCode = checkHashtag(hashtagsArr);
 
@@ -313,7 +313,6 @@ inputHashtags.addEventListener('change', function (evt) {
   } else {
     inputHashtags.setCustomValidity(errorCode);
   }
-
 });
 
 formHashtags.setAttribute('action', serverLink);
