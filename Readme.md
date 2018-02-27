@@ -1,6 +1,6 @@
 ﻿# Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
-* Студент: [Ольга](https://up.htmlacademy.ru/javascript/12/user/491137).
+* Студент: [Ольга Ярмак](https://up.htmlacademy.ru/javascript/12/user/491137).
 * Наставник: `Денис Корнейчук 70618`.
 
 ---
