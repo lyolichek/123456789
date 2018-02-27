@@ -35,7 +35,7 @@
         return 'symbol_wrong';
       }
       for (var j = 0; j < arr.length; j++) {
-        if ( (arr[i].toLowerCase() == arr[j].toLowerCase()) && (i !== j) ) {
+        if ((arr[i].toLowerCase() === arr[j].toLowerCase()) && (i !== j)) {
           return 'same';
         }
       }
@@ -56,7 +56,7 @@
     return validArr;
   }
 
-  inputHashtags.addEventListener('change', function (evt) {
+  inputHashtags.addEventListener('change', function () {
     var hashtagsArr = getValidHashtags(inputHashtags.value.split(' '));
     var errorCode = checkHashtag(hashtagsArr);
 

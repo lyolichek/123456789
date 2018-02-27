@@ -47,7 +47,7 @@
     var image = cloneElement.querySelector('img');
     var pictureLikes = cloneElement.querySelector('.picture-likes');
     var pictureComments = cloneElement.querySelector('.picture-comments');
-    
+
     image.setAttribute('src', obj.url);
     pictureLikes.textContent = obj.likes;
     pictureComments.textContent = obj.comments.length;
