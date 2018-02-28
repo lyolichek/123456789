@@ -53,7 +53,7 @@
     if (!FILTERS[name]) {
       return;
     }
-    element.style.filter = FILTERS[name](parseInt(value));
+    element.style.filter = FILTERS[name](parseInt(value, 10));
   }
 
   /**
@@ -122,7 +122,7 @@
     function getPinShift(evtPin) {
       var pinShift = evtPin.clientX - pinPosition;
 
-      newPinPos = Math.round(parseInt(currentPinPos) + (pinShift*100) / parseInt(lineWidth));
+      newPinPos = Math.round(parseInt(currentPinPos, 10) + (pinShift * 100) / parseInt(lineWidth, 10));
 
       if (newPinPos < 0) {
         newPinPos = 0;
@@ -136,7 +136,7 @@
       effectLevelVal.style.width = newPinPos + '%';
     }
 
-    function onMouseUp(evtUp) {
+    function onMouseUp() {
       currentPinPos = newPinPos;
 
       document.removeEventListener('mousemove', getPinShift);
@@ -144,7 +144,7 @@
     }
 
     document.addEventListener('mousemove', getPinShift);
-    document.addEventListener('mouseup', onMouseUp)
+    document.addEventListener('mouseup', onMouseUp);
 
   });
 
