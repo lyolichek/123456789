@@ -36,7 +36,6 @@
   controlsValue.setAttribute('value', '100%');
 
   var currentValue = parseInt(controlsValue.getAttribute('value'), 10);
-  var effectLevel = uploadEffectControls.querySelector('.upload-effect-level');
   var effectLevelLine = uploadEffectControls.querySelector('.upload-effect-level-line');
   var effectLevelPin = uploadEffectControls.querySelector('.upload-effect-level-pin');
   var effectLevelVal = uploadEffectControls.querySelector('.upload-effect-level-val');
@@ -120,10 +119,10 @@
     var pinPosition = evt.clientX;
     var lineWidth = getComputedStyle(effectLevelLine).width;
 
-    function getPinShift(evt) {
-      var pinShift = evt.clientX - pinPosition;
+    function getPinShift(evtPin) {
+      var pinShift = evtPin.clientX - pinPosition;
 
-      newPinPos = Math.round(parseInt(currentPinPos) + (pinShift*100)/parseInt(lineWidth));
+      newPinPos = Math.round(parseInt(currentPinPos) + (pinShift*100) / parseInt(lineWidth));
 
       if (newPinPos < 0) {
         newPinPos = 0;
@@ -137,7 +136,7 @@
       effectLevelVal.style.width = newPinPos + '%';
     }
 
-    function onMouseUp(evt) {
+    function onMouseUp(evtUp) {
       currentPinPos = newPinPos;
 
       document.removeEventListener('mousemove', getPinShift);
