@@ -9,29 +9,29 @@
       element.classList.add('hidden');
     },
     create: function (message, titleText) {
-    var popupOverlay = document.createElement("div");
-    var popupElement = document.createElement("div");
-    var popupContent = document.createElement("span");
-    var popupClose = document.createElement("span");
-    var title = document.createElement("h3");
+    var popupOverlay = document.createElement('div');
+    var popupElement = document.createElement('div');
+    var popupContent = document.createElement('span');
+    var popupClose = document.createElement('span');
+    var title = document.createElement('h3');
     var overlayStyles = {
-      'position': "fixed",
+      'position': 'fixed',
       'left': '0',
       'right': '0',
       'top': '0',
       'bottom': '0',
-        'z-index': '9',
-        'overflow': 'auto',
-        'background': 'rgba(0, 0, 0, 0.8)',
-        'color': '#000'
+      'z-index': '9',
+      'overflow': 'auto',
+      'background': 'rgba(0, 0, 0, 0.8)',
+      'color': '#000'
     };
     var popupStyles = {
-      'background': "#fff",
-      'width': "300px",
+      'background': '#fff',
+      'width': '300px',
       'min-height': '100px',
       'margin': '200px auto 0',
-        'padding': '10px 20px',
-        'position': 'relative'
+      'padding': '10px 20px',
+      'position': 'relative'
 
     };
     var closeStyles = {
@@ -48,16 +48,16 @@
       'border-radius': '2px',
       'text-indent': '-900em',
       'font-size': '0'
-    }
+    };
 
     for (var key in overlayStyles) {
-      popupOverlay.style[key] = overlayStyles[key]
+      popupOverlay.style[key] = overlayStyles[key];
     }
-    for (var key in popupStyles) {
-      popupElement.style[key] = popupStyles[key]
+    for (key in popupStyles) {
+      popupElement.style[key] = popupStyles[key];
     }
-    for (var key in closeStyles) {
-      popupClose.style[key] = closeStyles[key]
+    for (key in closeStyles) {
+      popupClose.style[key] = closeStyles[key];
     }
     popupOverlay.className = 'popup-overlay hidden';
     popupOverlay.appendChild(popupElement);
@@ -68,14 +68,14 @@
     title.innerHTML = titleText;
     popupContent.innerText = message;
     document.body.appendChild(popupOverlay);
-      window.popup.open(popupOverlay)
+      window.popup.open(popupOverlay);
 
       popupClose.addEventListener('click', function () {
-        window.popup.close(popupOverlay)
+        window.popup.close(popupOverlay);
       });
     },
     onError: function (message) {
-      window.popup.create(message, 'Ошибка')
+      window.popup.create(message, 'Ошибка');
     }
   };
 })();

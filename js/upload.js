@@ -150,7 +150,7 @@
    * Загрузка данных на сервер
    */
   uploadForm.addEventListener('submit', function (evt) {
-    window.backend.upload(new FormData(uploadForm), function (response) {
+    window.backend.upload(new FormData(uploadForm), function () {
       window.popup.close(uploadOverlay);
       uploadFile.value = '';
     }, window.popup.onError);
