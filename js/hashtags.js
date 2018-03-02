@@ -11,9 +11,8 @@
     'minLength': 'Длина хештега не может быть меньше 3 символов'
   };
 
-  var serverLink = 'https://js.dump.academy/kekstagram';
-  var formHashtags = document.querySelector('.upload-form');
-  var inputHashtags = formHashtags.querySelector('.upload-form-hashtags');
+  var uploadForm = document.querySelector('.upload-form');
+  var inputHashtags = uploadForm.querySelector('.upload-form-hashtags');
 
   function checkHashtag(arr) {
     if (arr.length > 5) {
@@ -67,5 +66,5 @@
 
   });
 
-  formHashtags.setAttribute('action', serverLink);
+  uploadForm.setAttribute('action', window.utils.serverLink);
 })();

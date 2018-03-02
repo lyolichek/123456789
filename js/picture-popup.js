@@ -19,7 +19,7 @@
     }
 
     galleryOverlayClose.addEventListener('click', function () {
-        window.popup.closePopup(galleryOverlay);
+        window.popup.close(galleryOverlay);
     });
     pictures.addEventListener('click', fillImgPopup);
 
@@ -36,7 +36,7 @@
                 clickedObj.likes = clickedElement.querySelector('.picture-likes').textContent;
                 clickedObj.comments = clickedElement.querySelector('.picture-comments').textContent;
                 openGalleryPhoto(clickedObj);
-                window.popup.openPopup(galleryOverlay);
+                window.popup.open(galleryOverlay);
                 break;
             } else if (evt.path[i] === event.currentTarget) {
                 break;

@@ -23,6 +23,7 @@
     }
   };
   var STEP = 25;
+  var uploadForm = document.querySelector('.upload-form');
   var uploadFile = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadFormCancel = document.querySelector('.upload-form-cancel');
@@ -79,10 +80,10 @@
    * Загрузка изображения и показ формы редактирования
    */
   uploadFile.addEventListener('change', function () {
-    window.popup.openPopup(uploadOverlay);
+    window.popup.open(uploadOverlay);
   });
   uploadFormCancel.addEventListener('click', function () {
-    window.popup.closePopup(uploadOverlay);
+    window.popup.close(uploadOverlay);
   });
 
   /**
@@ -111,10 +112,8 @@
   });
 
   /**
-   * Изменение масштаба изображения
+   * Изменение параметров фильтрова
    */
-
-
   effectLevelPin.addEventListener('mousedown', function (evt) {
     var pinPosition = evt.clientX;
     var lineWidth = getComputedStyle(effectLevelLine).width;
@@ -145,7 +144,17 @@
 
     document.addEventListener('mousemove', getPinShift);
     document.addEventListener('mouseup', onMouseUp);
+  });
 
+  /**
+   * Загрузка данных на сервер
+   */
+  uploadForm.addEventListener('submit', function (evt) {
+    window.backend.upload(new FormData(uploadForm), function (response) {
+      window.popup.close(uploadOverlay);
+      uploadFile.value = '';
+    }, window.popup.onError);
+    evt.preventDefault();
   });
 
 })();
