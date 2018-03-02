@@ -2,8 +2,6 @@
 
 (function () {
 
-  var serverLink = 'https://js.dump.academy/kekstagram';
-
   var HASHTAG_ERRORS = {
     'symbol': 'Отсутствует обязательный символ #',
     'symbol_wrong': 'Символ # должен стоять в начале хештега',
@@ -13,6 +11,7 @@
     'minLength': 'Длина хештега не может быть меньше 3 символов'
   };
 
+  var serverLink = 'https://js.dump.academy/kekstagram';
   var formHashtags = document.querySelector('.upload-form');
   var inputHashtags = formHashtags.querySelector('.upload-form-hashtags');
 
