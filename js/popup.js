@@ -50,13 +50,19 @@
       };
 
       for (var key in overlayStyles) {
-        popupOverlay.style[key] = overlayStyles[key];
+        if (overlayStyles.hasOwnProperty(key)) {
+          popupOverlay.style[key] = overlayStyles[key];
+        }
       }
       for (key in popupStyles) {
-        popupElement.style[key] = popupStyles[key];
+        if (popupStyles.hasOwnProperty(key)) {
+          popupElement.style[key] = popupStyles[key];
+        }
       }
       for (key in closeStyles) {
-        popupClose.style[key] = closeStyles[key];
+        if (closeStyles.hasOwnProperty(key)) {
+          popupClose.style[key] = closeStyles[key];
+        }
       }
       popupOverlay.className = 'popup-overlay hidden';
       popupOverlay.appendChild(popupElement);
