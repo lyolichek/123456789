@@ -24,7 +24,7 @@
       });
 
       return arr;
-      },
+    },
     'filter-discussed': function (arr) {
       arr.sort(function (first, second) {
         if (first.comments.length > second.comments.length) {
@@ -37,14 +37,14 @@
       });
 
       return arr;
-      },
+    },
     'filter-random': function (arr) {
       arr.sort(function (first, second) {
         return Math.random() - 0.5;
       });
 
       return arr;
-      }
+    }
   };
 
   var onLoad = function (data) {
