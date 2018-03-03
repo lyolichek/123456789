@@ -39,7 +39,7 @@
       return arr;
     },
     'filter-random': function (arr) {
-      arr.sort(function (first, second) {
+      arr.sort(function () {
         return Math.random() - 0.5;
       });
 
