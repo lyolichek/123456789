@@ -94,7 +94,7 @@
       } else if (evt.path[i] === event.currentTarget) {
         break;
       }
-    };
+    }
   });
 
   window.backend.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
