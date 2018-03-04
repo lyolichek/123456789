@@ -37,6 +37,8 @@
   controlsValue.setAttribute('value', '100%');
 
   var currentValue = parseInt(controlsValue.getAttribute('value'), 10);
+  var effectLevel = uploadEffectControls.querySelector('.upload-effect-level');
+  var effectLevelValue = uploadEffectControls.querySelector('.upload-effect-level-value');
   var effectLevelLine = uploadEffectControls.querySelector('.upload-effect-level-line');
   var effectLevelPin = uploadEffectControls.querySelector('.upload-effect-level-pin');
   var effectLevelVal = uploadEffectControls.querySelector('.upload-effect-level-val');
@@ -80,6 +82,7 @@
    * Загрузка изображения и показ формы редактирования
    */
   uploadFile.addEventListener('change', function () {
+    window.utils.hide(effectLevel);
     window.popup.open(uploadOverlay);
   });
   uploadFormCancel.addEventListener('click', function () {
@@ -95,6 +98,11 @@
       if (evt.path[i].hasAttribute('data-filter-type') === true) { // нашла элемент по атрибуту
         effectImagePreview.classList.remove(filterName);
         filterName = evt.path[i].dataset.filterType; // присвоила его значение
+        if (filterName != 'effect-none') {
+          window.utils.show(effectLevel);
+        } else {
+          window.utils.hide(effectLevel);
+        }
         effectImagePreview.classList.add(filterName);
         applyFilter(filterName, currentPinPos, effectImagePreview);
       } else if (evt.path[i] === event.currentTarget) {
@@ -131,6 +139,7 @@
       }
 
       applyFilter(filterName, newPinPos, effectImagePreview);
+      effectLevelValue.setAttribute('value', newPinPos);
       effectLevelPin.style.left = newPinPos + '%';
       effectLevelVal.style.width = newPinPos + '%';
     }

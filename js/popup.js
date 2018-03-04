@@ -3,7 +3,7 @@
 (function () {
   window.popup = {
     open: function (element) {
-      element.classList.remove('hidden');
+      window.utils.show(element);
 
       function escClose (evt) {
         if (evt.keyCode === 27) {
@@ -14,7 +14,7 @@
       document.addEventListener('keydown', escClose);
     },
     close: function (element) {
-      element.classList.add('hidden');
+      window.utils.hide(element);
       document.removeEventListener('keydown', escClose);
     },
     create: function (message, titleText) {
