@@ -118,7 +118,7 @@
     var pinPosition = evt.clientX;
     var lineWidth = getComputedStyle(effectLevelLine).width;
 
-    function getPinShift(evtPin) {
+    function onPinMouseMove(evtPin) {
       var pinShift = evtPin.clientX - pinPosition;
 
       newPinPos = Math.round(parseInt(currentPinPos, 10) + (pinShift * 100) / parseInt(lineWidth, 10));
@@ -138,11 +138,11 @@
     function onMouseUp() {
       currentPinPos = newPinPos;
 
-      document.removeEventListener('mousemove', getPinShift);
+      document.removeEventListener('mousemove', onPinMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     }
 
-    document.addEventListener('mousemove', getPinShift);
+    document.addEventListener('mousemove', onPinMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
 
