@@ -22,6 +22,7 @@
       return 'brightness(' + value * 0.03 + ')';
     }
   };
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var STEP = 25;
   var uploadForm = document.querySelector('.upload-form');
   var uploadFile = document.querySelector('#upload-file');
@@ -80,6 +81,22 @@
    * Загрузка изображения и показ формы редактирования
    */
   uploadFile.addEventListener('change', function () {
+    var file = uploadFile.files[0];
+    var fileName = file.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (it) {
+     return fileName.endsWith(it);
+    });
+    
+    if (matches) {
+      var reader = new FileReader();
+      
+      reader.addEventListener('load', function () {
+        effectImagePreview.src = reader.result;
+      });
+      
+      reader.readAsDataURL(file);
+    }
     window.popup.open(uploadOverlay);
   });
   uploadFormCancel.addEventListener('click', function () {
