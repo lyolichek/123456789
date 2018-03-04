@@ -4,9 +4,18 @@
   window.popup = {
     open: function (element) {
       element.classList.remove('hidden');
+
+      function escClose (evt) {
+        if (evt.keyCode === 27) {
+          window.popup.close(element);
+        }
+      }
+
+      document.addEventListener('keydown', escClose);
     },
     close: function (element) {
       element.classList.add('hidden');
+      document.removeEventListener('keydown', escClose);
     },
     create: function (message, titleText) {
       var popupOverlay = document.createElement('div');
