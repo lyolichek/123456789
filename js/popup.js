@@ -15,7 +15,6 @@
 
   function close(element) {
     window.utils.hide(element);
-    document.removeEventListener('keydown', escClose);
   }
 
   function create(message, titleText) {
