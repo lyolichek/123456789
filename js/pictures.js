@@ -47,7 +47,7 @@
     }
   };
 
-  var onLoad = function (data) {
+  function onLoad(data) {
     var lastTimeout;
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
