@@ -43,6 +43,7 @@
   var effectLevelPin = uploadEffectControls.querySelector('.upload-effect-level-pin');
   var effectLevelVal = uploadEffectControls.querySelector('.upload-effect-level-val');
   var currentPinPos = effectLevelPin.style.left;
+  var defaultEffectValue = 100;
   var newPinPos;
 
   /**
@@ -57,6 +58,9 @@
       return;
     }
     element.style.filter = FILTERS[name](parseInt(value, 10));
+    effectLevelValue.setAttribute('value', value);
+    effectLevelPin.style.left = value + '%';
+    effectLevelVal.style.width = value + '%';
   }
 
   /**
@@ -104,6 +108,7 @@
           window.utils.hide(effectLevel);
         }
         effectImagePreview.classList.add(filterName);
+        currentPinPos = defaultEffectValue;
         applyFilter(filterName, currentPinPos, effectImagePreview);
       } else if (evt.path[i] === event.currentTarget) {
         break;
@@ -139,9 +144,6 @@
       }
 
       applyFilter(filterName, newPinPos, effectImagePreview);
-      effectLevelValue.setAttribute('value', newPinPos);
-      effectLevelPin.style.left = newPinPos + '%';
-      effectLevelVal.style.width = newPinPos + '%';
     }
 
     function onMouseUp() {
