@@ -91,16 +91,16 @@
     var fileName = file.name.toLowerCase();
 
     var matches = FILE_TYPES.some(function (it) {
-     return fileName.endsWith(it);
+      return fileName.endsWith(it);
     });
-    
+
     if (matches) {
       var reader = new FileReader();
-      
+
       reader.addEventListener('load', function () {
         effectImagePreview.src = reader.result;
       });
-      
+
       reader.readAsDataURL(file);
     }
     window.utils.hide(effectLevel);
