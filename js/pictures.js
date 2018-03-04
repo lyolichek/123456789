@@ -55,6 +55,7 @@
     lastTimeout = window.setTimeout(function () {
       createElements(data);
       pictures.appendChild(fragment); // наполняем контейнер pictures элементами
+      filters.classList.remove('filters-inactive');
     }, 500);
   };
 
@@ -98,6 +99,4 @@
   });
 
   window.backend.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
-
-  filters.classList.remove('filters-inactive');
 })();
