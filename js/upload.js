@@ -89,21 +89,21 @@
   uploadFile.addEventListener('change', function () {
     var file = uploadFile.files[0];
     var fileName = file.name.toLowerCase();
-    var filterName = effectImagePreview.classList[1];
-
     var matches = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
 
     if (matches) {
       var reader = new FileReader();
-
       reader.addEventListener('load', function () {
         effectImagePreview.src = reader.result;
       });
 
       reader.readAsDataURL(file);
+
     }
+
+    filterName = effectImagePreview.classList[1];
     effectImagePreview.classList.remove(filterName);
     applyFilter('effect-none', defaultEffectValue, effectImagePreview);
     window.utils.hide(effectLevel);
