@@ -47,7 +47,7 @@
     }
   };
 
-  var onLoad = function (data) {
+  function onLoad(data) {
     var lastTimeout;
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
@@ -55,8 +55,9 @@
     lastTimeout = window.setTimeout(function () {
       createElements(data);
       pictures.appendChild(fragment); // наполняем контейнер pictures элементами
+      filters.classList.remove('filters-inactive');
     }, 500);
-  };
+  }
 
   /*
    * создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
@@ -98,6 +99,4 @@
   });
 
   window.backend.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
-
-  filters.classList.remove('filters-inactive');
 })();
