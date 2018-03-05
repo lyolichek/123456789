@@ -4,7 +4,7 @@
   function open(element) {
     window.utils.show(element);
 
-    function escClose (evt) {
+    function escClose(evt) {
       if (evt.keyCode === 27) {
         window.popup.close(element);
       }

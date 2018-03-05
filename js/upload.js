@@ -124,7 +124,7 @@
       if (evt.path[i].hasAttribute('data-filter-type') === true) { // нашла элемент по атрибуту
         effectImagePreview.classList.remove(filterName);
         filterName = evt.path[i].dataset.filterType; // присвоила его значение
-        if (filterName != 'effect-none') {
+        if (filterName !== 'effect-none') {
           window.utils.show(effectLevel);
         } else {
           window.utils.hide(effectLevel);

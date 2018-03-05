@@ -57,7 +57,7 @@
       pictures.appendChild(fragment); // наполняем контейнер pictures элементами
       filters.classList.remove('filters-inactive');
     }, 500);
-  };
+  }
 
   /*
    * создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
