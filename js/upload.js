@@ -89,6 +89,7 @@
   uploadFile.addEventListener('change', function () {
     var file = uploadFile.files[0];
     var fileName = file.name.toLowerCase();
+    var filterName = effectImagePreview.classList[1];
 
     var matches = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
@@ -103,6 +104,8 @@
 
       reader.readAsDataURL(file);
     }
+    effectImagePreview.classList.remove(filterName);
+    applyFilter('effect-none', defaultEffectValue, effectImagePreview);
     window.utils.hide(effectLevel);
     window.popup.open(uploadOverlay);
   });
