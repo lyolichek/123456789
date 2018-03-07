@@ -31,9 +31,9 @@
         clickedObj.likes = clickedElement.querySelector('.picture-likes').textContent;
         clickedObj.comments = clickedElement.querySelector('.picture-comments').textContent;
         openGalleryPhoto(clickedObj);
-        window.popup.open(galleryOverlay, function(cancelPress) {
+        window.popup.open(galleryOverlay, function (cancelPress) {
           galleryOverlayClose.addEventListener('click', cancelPress);
-        }, function(cancelPress) {
+        }, function (cancelPress) {
           galleryOverlayClose.removeEventListener('click', cancelPress);
         });
         break;

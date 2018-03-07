@@ -28,7 +28,7 @@
   }
 
   function close(element) {
-    if(onCloseCallback) {
+    if (onCloseCallback) {
       onCloseCallback();
     }
 

@@ -104,9 +104,9 @@
         effectImagePreview.classList.remove(filterName);
         applyFilter('effect-none', defaultEffectValue, effectImagePreview);
         window.utils.hide(effectLevel);
-        window.popup.open(uploadOverlay, function(cancelPress) {
+        window.popup.open(uploadOverlay, function (cancelPress) {
           uploadFormCancel.addEventListener('click', cancelPress);
-        }, function(cancelPress) {
+        }, function (cancelPress) {
           uploadForm.reset();
           uploadFormCancel.removeEventListener('click', cancelPress);
         });
