@@ -18,15 +18,12 @@
     commentsCount.textContent = obj.comments;
   }
 
-  galleryOverlayClose.addEventListener('click', function () {
-    window.popup.close(galleryOverlay);
-  });
-  pictures.addEventListener('click', fillImgPopup);
+  pictures.addEventListener('click', onPictureClick);
 
   /*
     * Наполняет попап информацией о картинке
     */
-  function fillImgPopup(evt) {
+  function onPictureClick(evt) {
     evt.preventDefault();
     for (var i = 0; i < evt.path.length; i++) { // все элементы на котором сработало событие, клик
       if (evt.path[i].classList && evt.path[i].classList.contains('picture')) {
@@ -36,7 +33,11 @@
         clickedObj.likes = clickedElement.querySelector('.picture-likes').textContent;
         clickedObj.comments = clickedElement.querySelector('.picture-comments').textContent;
         openGalleryPhoto(clickedObj);
-        window.popup.open(galleryOverlay);
+        window.popup.open(galleryOverlay, function(cancelPress) {
+          galleryOverlayClose.addEventListener('click', cancelPress);
+        }, function(cancelPress) {
+          galleryOverlayClose.removeEventListener('click', cancelPress);
+        });
         break;
       } else if (evt.path[i] === event.currentTarget) {
         break;

@@ -22,11 +22,12 @@
       return 'brightness(' + value * 0.03 + ')';
     }
   };
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var STEP = 25;
   var uploadForm = document.querySelector('.upload-form');
+  var uploadFormCancel = document.querySelector('.upload-form-cancel');
   var uploadFile = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.upload-overlay');
-  var uploadFormCancel = document.querySelector('.upload-form-cancel');
   var uploadEffectControls = document.querySelector('.upload-effect-controls');
   var effectImagePreview = document.querySelector('.effect-image-preview'); // большая картинка
   var filterName = 'effect-none';
@@ -37,10 +38,13 @@
   controlsValue.setAttribute('value', '100%');
 
   var currentValue = parseInt(controlsValue.getAttribute('value'), 10);
+  var effectLevel = uploadEffectControls.querySelector('.upload-effect-level');
+  var effectLevelValue = uploadEffectControls.querySelector('.upload-effect-level-value');
   var effectLevelLine = uploadEffectControls.querySelector('.upload-effect-level-line');
   var effectLevelPin = uploadEffectControls.querySelector('.upload-effect-level-pin');
   var effectLevelVal = uploadEffectControls.querySelector('.upload-effect-level-val');
   var currentPinPos = effectLevelPin.style.left;
+  var defaultEffectValue = 100;
   var newPinPos;
 
   /**
@@ -55,6 +59,9 @@
       return;
     }
     element.style.filter = FILTERS[name](parseInt(value, 10));
+    effectLevelValue.setAttribute('value', value);
+    effectLevelPin.style.left = value + '%';
+    effectLevelVal.style.width = value + '%';
   }
 
   /**
@@ -80,10 +87,34 @@
    * Загрузка изображения и показ формы редактирования
    */
   uploadFile.addEventListener('change', function () {
-    window.popup.open(uploadOverlay);
-  });
-  uploadFormCancel.addEventListener('click', function () {
-    window.popup.close(uploadOverlay);
+    var file = uploadFile.files[0];
+    var fileName = file.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        effectImagePreview.src = reader.result;
+
+        filterName = effectImagePreview.classList[1];
+        effectImagePreview.classList.remove(filterName);
+        applyFilter('effect-none', defaultEffectValue, effectImagePreview);
+        window.utils.hide(effectLevel);
+        window.popup.open(uploadOverlay, function(cancelPress) {
+          uploadFormCancel.addEventListener('click', cancelPress);
+        }, function(cancelPress) {
+          uploadForm.reset();
+          uploadFormCancel.removeEventListener('click', cancelPress);
+        });
+      });
+
+      reader.readAsDataURL(file);
+
+    }
   });
 
   /**
@@ -95,7 +126,13 @@
       if (evt.path[i].hasAttribute('data-filter-type') === true) { // нашла элемент по атрибуту
         effectImagePreview.classList.remove(filterName);
         filterName = evt.path[i].dataset.filterType; // присвоила его значение
+        if (filterName !== 'effect-none') {
+          window.utils.show(effectLevel);
+        } else {
+          window.utils.hide(effectLevel);
+        }
         effectImagePreview.classList.add(filterName);
+        currentPinPos = defaultEffectValue;
         applyFilter(filterName, currentPinPos, effectImagePreview);
       } else if (evt.path[i] === event.currentTarget) {
         break;
@@ -118,7 +155,7 @@
     var pinPosition = evt.clientX;
     var lineWidth = getComputedStyle(effectLevelLine).width;
 
-    function getPinShift(evtPin) {
+    function onPinMouseMove(evtPin) {
       var pinShift = evtPin.clientX - pinPosition;
 
       newPinPos = Math.round(parseInt(currentPinPos, 10) + (pinShift * 100) / parseInt(lineWidth, 10));
@@ -131,18 +168,16 @@
       }
 
       applyFilter(filterName, newPinPos, effectImagePreview);
-      effectLevelPin.style.left = newPinPos + '%';
-      effectLevelVal.style.width = newPinPos + '%';
     }
 
     function onMouseUp() {
       currentPinPos = newPinPos;
 
-      document.removeEventListener('mousemove', getPinShift);
+      document.removeEventListener('mousemove', onPinMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     }
 
-    document.addEventListener('mousemove', getPinShift);
+    document.addEventListener('mousemove', onPinMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
 
