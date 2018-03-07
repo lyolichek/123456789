@@ -18,11 +18,6 @@
     commentsCount.textContent = obj.comments;
   }
 
-  galleryOverlayClose.addEventListener('click', function () {
-    window.popup.close(galleryOverlay);
-  });
-  pictures.addEventListener('click', onPictureClick);
-
   /*
     * Наполняет попап информацией о картинке
     */
@@ -36,11 +31,17 @@
         clickedObj.likes = clickedElement.querySelector('.picture-likes').textContent;
         clickedObj.comments = clickedElement.querySelector('.picture-comments').textContent;
         openGalleryPhoto(clickedObj);
-        window.popup.open(galleryOverlay);
+        window.popup.open(galleryOverlay, function(cancelPress) {
+          galleryOverlayClose.addEventListener('click', cancelPress);
+        }, function(cancelPress) {
+          galleryOverlayClose.removeEventListener('click', cancelPress);
+        });
         break;
       } else if (evt.path[i] === event.currentTarget) {
         break;
       }
     }
   }
+
+  pictures.addEventListener('click', onPictureClick);
 })();

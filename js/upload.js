@@ -25,9 +25,9 @@
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var STEP = 25;
   var uploadForm = document.querySelector('.upload-form');
+  var uploadFormCancel = document.querySelector('.upload-form-cancel');
   var uploadFile = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.upload-overlay');
-  var uploadFormCancel = document.querySelector('.upload-form-cancel');
   var uploadEffectControls = document.querySelector('.upload-effect-controls');
   var effectImagePreview = document.querySelector('.effect-image-preview'); // большая картинка
   var filterName = 'effect-none';
@@ -99,20 +99,22 @@
 
       reader.addEventListener('load', function () {
         effectImagePreview.src = reader.result;
+
+        filterName = effectImagePreview.classList[1];
+        effectImagePreview.classList.remove(filterName);
+        applyFilter('effect-none', defaultEffectValue, effectImagePreview);
+        window.utils.hide(effectLevel);
+        window.popup.open(uploadOverlay, function(cancelPress) {
+          uploadFormCancel.addEventListener('click', cancelPress);
+        }, function(cancelPress) {
+          uploadForm.reset();
+          uploadFormCancel.removeEventListener('click', cancelPress);
+        });
       });
 
       reader.readAsDataURL(file);
 
     }
-
-    filterName = effectImagePreview.classList[1];
-    effectImagePreview.classList.remove(filterName);
-    applyFilter('effect-none', defaultEffectValue, effectImagePreview);
-    window.utils.hide(effectLevel);
-    window.popup.open(uploadOverlay);
-  });
-  uploadFormCancel.addEventListener('click', function () {
-    window.popup.close(uploadOverlay);
   });
 
   /**
