@@ -21,12 +21,12 @@
   galleryOverlayClose.addEventListener('click', function () {
     window.popup.close(galleryOverlay);
   });
-  pictures.addEventListener('click', fillImgPopup);
+  pictures.addEventListener('click', onPictureClick);
 
   /*
     * Наполняет попап информацией о картинке
     */
-  function fillImgPopup(evt) {
+  function onPictureClick(evt) {
     evt.preventDefault();
     for (var i = 0; i < evt.path.length; i++) { // все элементы на котором сработало событие, клик
       if (evt.path[i].classList && evt.path[i].classList.contains('picture')) {

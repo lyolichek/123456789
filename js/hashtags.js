@@ -29,7 +29,7 @@
       if (arr[i].indexOf('#') < 0) {
         return 'symbol';
       }
-      if (arr[i].indexOf('#') > 0) {
+      if ((arr[i].indexOf('#') > 0) || (arr[i].indexOf('#', 1) > 0)) {
         return 'symbol_wrong';
       }
       for (var j = 0; j < arr.length; j++) {
